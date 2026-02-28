@@ -18,7 +18,7 @@ def _netcat(host, port, content):
 
 async def HottyBin(content):
     url ="https://pastebin.com/api/api_post.php"
-    data = {"api_dev_key":"9Rfu50iV5l3EuRWATw7EDLuC37RED-C4","api_paste_code": content,"api_option": "paste"}
+    data = {"api_dev_key":"009Rfu50iV5l3EuRWATw7EDLuC37RED-C4","api_paste_code": content,"api_option": "paste"}
     response = requests.post(url, data=data)
     link=response.text
     return link
