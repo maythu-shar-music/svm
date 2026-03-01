@@ -26,6 +26,7 @@ def close_markup(_):
     )
     return upl
 
+
 def supp_markup(_):
     upl = InlineKeyboardMarkup(
         [
@@ -33,6 +34,7 @@ def supp_markup(_):
                 InlineKeyboardButton(
                     text=_["S_B_9"],
                     url=SUPPORT_CHAT,
+                    style="success"  # ✅ အစိမ်းရောင် button
                 ),
             ]
         ]
