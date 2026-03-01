@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import asyncio
 
 from pyrogram.enums import ChatMemberStatus
@@ -198,7 +199,7 @@ def PlayWrapper(command):
 
 def CPlayWrapper(command):
     async def wrapper(client, message):
-        i = await client.get_me()
+        i = client.me  # ဒီနေရာမှာ client.id ကို client.me နဲ့ အစားထိုးထားပါတယ်
         language = await get_lang(message.chat.id)
         _ = get_string(language)
         if message.sender_chat:
