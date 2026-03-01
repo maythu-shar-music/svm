@@ -3,12 +3,12 @@ from pyrogram import filters
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.errors import MessageNotModified
 from pyrogram.types import (
-    CallbackQuery,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    Message,
-    InputMediaPhoto,
-    InputMediaVideo,
+    CallbackQuery,  # <-- ဒီနေရာမှာ သာမန် space ကိုသုံးပါ
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    InputMediaPhoto,
+    InputMediaVideo,
 )
 
 from maythusharmusic import app
@@ -436,4 +436,5 @@ async def vote_change(client, CallbackQuery, _):
         )
     except MessageNotModified:
         return#settings.py pyrofork version နဲ့ကိုက်ညီအာင်ပြင်ပး
+
 
