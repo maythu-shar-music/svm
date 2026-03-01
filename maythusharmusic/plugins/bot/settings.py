@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pyrogram import filters
 from pyrogram.enums import ChatType, ParseMode
 from pyrogram.errors import MessageNotModified
@@ -435,3 +436,4 @@ async def vote_change(client, CallbackQuery, _):
         )
     except MessageNotModified:
         return#settings.py pyrofork version နဲ့ကိုက်ညီအာင်ပြင်ပး
+
