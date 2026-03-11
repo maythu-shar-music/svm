@@ -47,38 +47,39 @@ async def userdel(client, message: Message, _):
 @app.on_message(filters.command(["sudolist", "listsudo", "sudoers"]) & ~BANNED_USERS)
 @language
 async def sudoers_list(client, message: Message, _):
+    # Sudo မဟုတ်တဲ့သူတွေအတွက် Owner ကိုပဲ ID နဲ့တကွ ပြမယ်
     if message.from_user.id not in SUDOERS:
-        # Sudo မဟုတ်တဲ့သူတွေ run ရင်ပြမယ့် စာသားမှာလည်း Owner ID ပါထည့်ပေးထားပါတယ်
+        owner = await app.get_users(OWNER_ID)
+        owner_name = owner.first_name if not owner.mention else owner.mention
         return await message.reply_text(
-            f"💔 <b>ᴏᴡɴᴇʀs:</b>\n1➤ <a href='https://t.me/iwillsgoforwardsalone'>圓橱 𝗪𝗮𝗻𝗴 𝐋𝐢𝐧┃</a> (<code>{OWNER_ID}</code>)",
+            f"👑 **Owner:**\n{owner_name} (`{OWNER_ID}`)\n\n"
+            f"💫 **Sudo Users တွေကြည့်ဖို့ Sudo ဖြစ်ရန်လိုအပ်ပါသည်။**",
             disable_web_page_preview=True
         )
     
-    text = _["sudo_5"]
-    user = await app.get_users(OWNER_ID)
-    user = user.first_name if not user.mention else user.mention
+    # Sudo users တွေအတွက် List အပြည့်အစုံ ပြမယ်
+    text = "**👑 Owner & Sudo Users List:**\n\n"
     
-    # Owner ရဲ့ နာမည်ဘေးမှာ ID ပါတွဲပြဖို့ ပြင်ထားပါတယ်
-    text += f"1➤ {user} (<code>{OWNER_ID}</code>)\n"
+    # Owner ရဲ့ အချက်အလက်
+    owner = await app.get_users(OWNER_ID)
+    owner_name = owner.first_name if not owner.mention else owner.mention
+    text += f"**Owner:**\n{owner_name} (`{OWNER_ID}`)\n\n"
     
-    count = 0
-    smex = 0
+    # Sudo Users တွေ စာရင်း
+    sudo_users = []
     for user_id in SUDOERS:
         if user_id != OWNER_ID:
             try:
                 user = await app.get_users(user_id)
-                user = user.first_name if not user.mention else user.mention
-                if smex == 0:
-                    smex += 1
-                    text += _["sudo_6"]
-                count += 1
-                
-                # Sudoer တွေရဲ့ နာမည်ဘေးမှာ ID ပါတွဲပြဖို့ ပြင်ထားပါတယ်
-                text += f"{count}➤ {user} (<code>{user_id}</code>)\n"
+                user_name = user.first_name if not user.mention else user.mention
+                sudo_users.append(f"• {user_name} (`{user_id}`)")
             except:
-                continue
-                
-    if not text:
-        await message.reply_text(_["sudo_7"])
+                sudo_users.append(f"• Unknown User (`{user_id}`)")
+    
+    if sudo_users:
+        text += "**Sudo Users:**\n"
+        text += "\n".join(sudo_users)
     else:
-        await message.reply_text(text, reply_markup=close_markup(_))
+        text += "**Sudo Users:**\n• No sudo users found."
+    
+    await message.reply_text(text, reply_markup=close_markup(_))
