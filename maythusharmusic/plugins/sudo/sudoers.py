@@ -48,13 +48,19 @@ async def userdel(client, message: Message, _):
 @language
 async def sudoers_list(client, message: Message, _):
     if message.from_user.id not in SUDOERS:
-        return await message.reply_text("💔 <b>ᴏᴡɴᴇʀs:</b>\n1➤ <a href='https://t.me/BRANDED_WORLD'>🇷🇺⛦°𝗕𝗥𝗔𝗡𝗗𝗘𝗗 𓆩🇽𓆪 𝗞𝗜𝗡𝗚🇳</a>",
-        disable_web_page_preview=True,
-        parse_mode="html")
+        # Sudo မဟုတ်တဲ့သူတွေ run ရင်ပြမယ့် စာသားမှာလည်း Owner ID ပါထည့်ပေးထားပါတယ်
+        return await message.reply_text(
+            f"💔 <b>ᴏᴡɴᴇʀs:</b>\n1➤ <a href='https://t.me/iwillsgoforwardsalone'>圓橱 𝗪𝗮𝗻𝗴 𝐋𝐢𝐧┃</a> (<code>{OWNER_ID}</code>)",
+            disable_web_page_preview=True
+        )
+    
     text = _["sudo_5"]
     user = await app.get_users(OWNER_ID)
     user = user.first_name if not user.mention else user.mention
-    text += f"1➤ {user}\n"
+    
+    # Owner ရဲ့ နာမည်ဘေးမှာ ID ပါတွဲပြဖို့ ပြင်ထားပါတယ်
+    text += f"1➤ {user} (<code>{OWNER_ID}</code>)\n"
+    
     count = 0
     smex = 0
     for user_id in SUDOERS:
@@ -66,9 +72,12 @@ async def sudoers_list(client, message: Message, _):
                     smex += 1
                     text += _["sudo_6"]
                 count += 1
-                text += f"{count}➤ {user}\n"
+                
+                # Sudoer တွေရဲ့ နာမည်ဘေးမှာ ID ပါတွဲပြဖို့ ပြင်ထားပါတယ်
+                text += f"{count}➤ {user} (<code>{user_id}</code>)\n"
             except:
                 continue
+                
     if not text:
         await message.reply_text(_["sudo_7"])
     else:
